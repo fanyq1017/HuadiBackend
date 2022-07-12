@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class issue {
+public class Issue {
     private int id;
     private String location;
     private String name;

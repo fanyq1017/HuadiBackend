@@ -3,7 +3,7 @@ package com.example.huadibackend.entity;
 import lombok.Data;
 
 @Data
-public class user {
+public class User {
     private int id;
     private String name;
     private String password;
