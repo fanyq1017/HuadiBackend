@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 12/07/2022 15:36:04
+ Date: 13/07/2022 15:27:33
 */
 
 SET NAMES utf8mb4;
@@ -48,10 +48,15 @@ CREATE TABLE `help`  (
 DROP TABLE IF EXISTS `issue`;
 CREATE TABLE `issue`  (
   `i_id` int(0) NOT NULL COMMENT '发布信息的唯一标识',
-  `i_location` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '管理员发布markdown的文件位置',
-  `i_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '发布信息管理员的姓名',
-  `i_time` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '发布时间',
-  PRIMARY KEY (`i_id`) USING BTREE
+  `i_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布文件的标题',
+  `u_id` int(0) NULL DEFAULT NULL COMMENT '发布作者的id',
+  `i_publishtime` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '第一次发布时间',
+  `i_mdContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '管理员发布的markdown文件的源码',
+  `i_state` int(0) NULL DEFAULT NULL COMMENT '0代表草稿箱，1代表已发表，2代表已删除',
+  `i_edittime` datetime(0) NULL DEFAULT NULL COMMENT '文章编辑时间\"类似最后一次修改的时间\"',
+  PRIMARY KEY (`i_id`) USING BTREE,
+  INDEX `u_id`(`u_id`) USING BTREE,
+  CONSTRAINT `u_id` FOREIGN KEY (`u_id`) REFERENCES `user` (`u_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
