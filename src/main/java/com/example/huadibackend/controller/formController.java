@@ -1,20 +1,25 @@
 package com.example.huadibackend.controller;
 
 import com.example.huadibackend.util.JsonResult;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import javax.servlet.http.HttpSession;
+
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.UUID;
+
 
 
 @Controller
 public class formController {
-    private static final String baseurl = "http://10.132.50.43:8080";
+    public static final String baseurl = "http://10.134.48.4:8080";
     @GetMapping("/form_layouts")//上传文件的初步模型
     public String formLayouts(){
         return "form/form_layouts";
@@ -26,9 +31,10 @@ public class formController {
     ) throws IOException {
         String url = null;
         if (!file.isEmpty()) {
-            String originalFilename = file.getOriginalFilename()+"_"+;
-            file.transferTo(new File(System.getProperty("user.dir") + "/src/main/resources/static/img/" + originalFilename));
-            url = baseurl + "/img/" + originalFilename;
+            String originalFilename = file.getOriginalFilename();
+            String imgName = UUID.randomUUID() + "_" + file.getOriginalFilename().replaceAll(" ", "");
+            file.transferTo(new File(System.getProperty("user.dir") + "/src/main/resources/static/img/" + imgName));
+            url = baseurl + "/img/" + imgName;
             System.out.println(url);
         }
         return new JsonResult<>(200, url);
@@ -42,6 +48,22 @@ public class formController {
         System.out.println(httpSession);
         return new JsonResult<>(200,"OK");
     }
+
+    @GetMapping("/test")
+    @ResponseBody
+    public JsonResult<String> TEST1(HttpSession httpSession){
+        httpSession.setAttribute("uid",123456);
+        System.out.println("ok");
+        return new JsonResult<String>(200,"httpSession");
+    }
+
+    @GetMapping("/gettest")
+    @ResponseBody
+    public JsonResult<String> TEST2(HttpSession httpSession){
+        System.out.println(httpSession.getAttribute("uid"));
+        return new JsonResult<String>(200,"SUCCESS");
+    }
+
 
     /**
      * 上传图片
@@ -65,7 +87,6 @@ public class formController {
 //                .append(req.getServerPort())
 //                .append(req.getContextPath())
 //                .append(filePath);
-//        String imgName = UUID.randomUUID() + "_" + image.getOriginalFilename().replaceAll(" ", "");
 //        try {
 //            IOUtils.write(image.getBytes(), new FileOutputStream(new File(imgFolder, imgName)));
 //            url.append("/").append(imgName);
@@ -76,7 +97,6 @@ public class formController {
 //        return new RespBean("error", "上传失败!");
 //    }
 
-
-    }
+}
 
 

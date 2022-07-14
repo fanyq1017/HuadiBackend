@@ -1,9 +1,11 @@
 package com.example.huadibackend.service;
 
 import com.example.huadibackend.entity.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface UserService {
 
     User selectById(int userId);

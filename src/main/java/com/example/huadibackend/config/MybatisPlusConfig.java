@@ -1,4 +1,4 @@
-package com.example.huadibackend;
+package com.example.huadibackend.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
