@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Options;
 public interface ActivityMapper {
 
        @Options(useGeneratedKeys = true,keyProperty = "activityId")
-       @Insert("insert into activity(a_id,a_name,a_image,a_information) values(#{activityId},#{activityName},#{activityImage},#{activityInformation})")
+       @Insert("insert into activity(a_name,a_image,a_information) values(#{activityName},#{activityImage},#{activityInformation})")
        int add(Activity activity);
 
 //       @Select("select * from activity")
