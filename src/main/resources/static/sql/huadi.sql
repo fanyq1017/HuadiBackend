@@ -22,16 +22,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`  (
-  `a_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '发布信息的唯一标识',
-  `a_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布文件的标题',
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '发布信息的唯一标识',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布文件的标题',
   `u_id` int(0) NULL DEFAULT NULL COMMENT '发布作者的id',
-  `a_publishdate` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '第一次发布时间',
-  `a_mdContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '管理员发布的markdown文件的源码',
-  `a_state` int(0) NULL DEFAULT NULL COMMENT '0代表草稿箱，1代表已发表，2代表已删除',
-  `a_edittime` datetime(0) NULL DEFAULT NULL COMMENT '文章编辑时间\"类似最后一次修改的时间\"',
-  `a_type` int(0) NULL DEFAULT NULL COMMENT '0志愿活动1新闻2专题活动之类的',
-  `a_htmlContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT 'html源码',
-  PRIMARY KEY (`a_id`) USING BTREE,
+  `publishdate` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '第一次发布时间',
+  `edittime` datetime(0) NULL DEFAULT NULL COMMENT '文章编辑时间\"类似最后一次修改的时间\"',
+  `mdContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '管理员发布的markdown文件的源码',
+  `htmlContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT 'html源码',
+  `state` int(0) NULL DEFAULT NULL COMMENT '0代表草稿箱，1代表已发表，2代表已删除',
+  `type` int(0) NULL DEFAULT NULL COMMENT '0志愿活动1新闻2专题活动之类的',
+  PRIMARY KEY (`id`) USING BTREE,
   INDEX `u_id`(`u_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 

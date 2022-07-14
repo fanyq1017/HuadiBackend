@@ -15,8 +15,15 @@ public class ArticleServiceTest {
 
     @Test
     public void addArticle() {
-        Article article = new Article(-1, "this is title", 1, "###  111111", "<h3><a id=\"111111_0\"></a>111111</h3>", 1, null, null, -1);
+        Article article = new Article(-1, "this is title", 1, null,null,"###  111111", "<h3><a id=\"111111_0\"></a>111111</h3>", 1, -1);
         articleService.addNewArticle(article);
+    }
+
+    @Test
+    public void getArticleById()
+    {
+        Article article1 = articleService.getArticleById(2);
+        System.out.println(article1);
     }
 }
 

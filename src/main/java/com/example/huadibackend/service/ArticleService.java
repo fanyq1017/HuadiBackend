@@ -27,7 +27,7 @@ public interface ArticleService {
 
     public int restoreArticle(Integer articleId);
 
-    public Article getArticleById(Long aid);
+    public Article getArticleById(int aid);
 
     public void pvStatisticsPerDay() ;
 

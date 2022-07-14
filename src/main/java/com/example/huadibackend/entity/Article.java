@@ -13,11 +13,11 @@ public class Article {
     private int id;
     private String title;
     private int uid;
+    private Timestamp publishDate;
+    private Timestamp editTime;
     private String mdContent;
     private String htmlContent;
     private int state;
-    private Timestamp publishDate;
-    private Timestamp editTime;
     private int type;
 
 

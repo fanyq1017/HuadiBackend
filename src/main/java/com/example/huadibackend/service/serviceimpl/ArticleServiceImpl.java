@@ -82,8 +82,10 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article getArticleById(Long aid) {
-        return null;
+    public Article getArticleById(int aid) {
+        Article article= articleMapper.getArticleById(aid);
+        System.out.println(aid);
+        return article;
     }
 
     @Override

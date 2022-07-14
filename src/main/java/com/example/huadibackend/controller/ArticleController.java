@@ -75,8 +75,10 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/{aid}", method = RequestMethod.GET)
-    public Article getArticleById(@PathVariable Long aid) {
-        return articleService.getArticleById(aid);
+    public JsonResult<Article> getArticleById(@PathVariable int aid) {
+        Article article = articleService.getArticleById(aid);
+        System.out.println(article);
+        return new JsonResult<Article>(200,article) ;
     }
 
     @RequestMapping(value = "/dustbin", method = RequestMethod.PUT)

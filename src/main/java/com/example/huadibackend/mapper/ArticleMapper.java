@@ -12,12 +12,12 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper {
     @Options(useGeneratedKeys = true)
-    @Insert("insert into article(a_title,u_id,a_publishdate,a_mdContent," +
-            "a_state,a_edittime,a_type,a_htmlContent) values(#{title}," +
+    @Insert("insert into article(title,u_id,publishdate,mdContent," +
+            "state,edittime,type,htmlContent) values(#{title}," +
             " #{uid},#{publishDate},#{mdContent},#{state},#{editTime},#{type},#{htmlContent})")
     int addNewArticle(Article article);
 
-    @Update("update article set (a_title=#{title},a_mdContent=#{mdContent},a_htmlContent=#{htmlContent},a_editTime=#{editTime}")
+    @Update("update article set (title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},editTime=#{editTime}")
     int updateArticle(Article article);
 
     List<Article> getArticleByState(@Param("state") Integer state, @Param("start") Integer start, @Param("count") Integer count, @Param("uid") Long uid,@Param("keywords") String keywords);
@@ -32,7 +32,8 @@ public interface ArticleMapper {
 
     int deleteArticleById(@Param("aids") Long[] aids);
 
-    Article getArticleById(Long aid);
+    @Select("select * from article where id = ${aid}")
+    Article getArticleById(int aid);
 
     void pvIncrement(Long aid);
 
