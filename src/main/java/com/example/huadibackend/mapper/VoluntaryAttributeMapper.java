@@ -11,10 +11,9 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface VoluntaryAttributeMapper {
-   @Select("select * from VoluntaryProject where V_id in" +
-           "select project_id " +
+   @Select("select project_id " +
            "from VoluntaryAttribute" +
-           "${eq.customSqlSegment}")// 这个多表查询也不知道可不可以这样写
-   IPage<VoluntaryProject> findByAttribute(Page<VoluntaryProject> page, @Param("qw") QueryWrapper<VoluntaryAttribute> queryWrapper);
+           "${ew.customSqlSegment}")// 这个多表查询也不知道可不可以这样写
+   IPage<Integer> findByAttribute(Page<Integer> page, @Param("ew") QueryWrapper<VoluntaryAttribute> queryWrapper);
 //需要返回什么东西
 }

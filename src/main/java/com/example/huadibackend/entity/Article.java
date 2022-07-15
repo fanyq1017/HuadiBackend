@@ -10,15 +10,15 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Article {
-    private int id;
+    private Integer id;
     private String title;
-    private int uid;
+    private Integer uid;
     private Timestamp publishDate;
     private Timestamp editTime;
     private String mdContent;
     private String htmlContent;
-    private int state;
-    private int type;
+    private Integer state;
+    private Integer type;
 
 
 }

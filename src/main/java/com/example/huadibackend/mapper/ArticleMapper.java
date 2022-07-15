@@ -1,6 +1,9 @@
 package com.example.huadibackend.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.Article;
 import org.apache.ibatis.annotations.*;
 
@@ -11,7 +14,7 @@ import java.util.List;
  */
 
 @Mapper
-public interface ArticleMapper {
+public interface ArticleMapper extends BaseMapper<Article> {
     @Options(useGeneratedKeys = true)
     @Insert("insert into article(title,u_id,publishdate,mdContent," +
             "state,edittime,type,htmlContent) values(#{title}," +
@@ -21,14 +24,9 @@ public interface ArticleMapper {
     @Update("update article set title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},editTime=#{editTime} where id =#{id}")
     int updateArticle(Article article);
 
-    @Select("select * from article where state = ${state}")
-    List<Article> getArticleByState(@Param("state") Integer state, @Param("start") Integer start, @Param("count") Integer count, @Param("uid") Long uid,@Param("keywords") String keywords);
-
-//  List<Article> getArticleByStateByAdmin(@Param("start") int start, @Param("count") Integer count, @Param("keywords") String keywords);
-
     int getArticleCountByState(@Param("state") Integer state, @Param("uid") int uid, @Param("keywords") String keywords);
 
-    int updateArticleState(@Param("aids") int aids[], @Param("state") Integer state);
+    int updateArticleState(@Param("aids") Integer aid, @Param("state") Integer state);
 
     int updateArticleStateById(@Param("articleId") Integer articleId, @Param("state") Integer state);
 

@@ -34,7 +34,7 @@ public class ArticleServiceTest {
     @Test
     public void deleteArticleById()
     {
-        int[] aid =new int[]{1,2,3,4};
+        Integer[] aid =new Integer[]{1,2,3,4};
         System.out.println(Arrays.toString(aid));
         System.out.println(articleService.deleteArticleById(aid));
     }

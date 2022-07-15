@@ -1,6 +1,8 @@
 package com.example.huadibackend.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.Article;
 import com.example.huadibackend.service.ArticleService;
 import com.example.huadibackend.util.JsonResult;
@@ -16,14 +18,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.example.huadibackend.controller.formController.baseurl;
 
 /**
  * Created by lkc on 2022/7/14.
  */
 @RestController
 @RequestMapping("/article")
-public class ArticleController {
+public class ArticleController extends BaseConfig{
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
@@ -65,16 +66,14 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public Map<String, Object> getArticleByState(@RequestParam(value = "state", defaultValue = "-1") Integer state, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "count", defaultValue = "6") Integer count,String keywords) {
-        int totalCount = articleService.getArticleCountByState(state, 1,keywords);//test 这里的1L是用作测试用的
-        List<Article> articles = articleService.getArticleByState(state, page, count,keywords);
-        Map<String, Object> map = new HashMap<>();
-        map.put("totalCount", totalCount);
-        map.put("articles", articles);
-        return map;
+    public IPage<Article> getArticleByState(@RequestParam(value = "state", defaultValue = "-1") Integer state, @RequestParam(value = "page", defaultValue = "1") Integer current, @RequestParam(value = "count", defaultValue = "6") Integer size,@RequestParam(value = "type",defaultValue = "0")Integer type) {
+        Page<Article> page = new Page<>(current,size);
+      //  int totalCount = articleService.getArticleCountByState(state, 1);//test 这里的1L是用作测试用的 uid不一定要不要
+        IPage<Article> articles = articleService.selectByStateType(state,page,type);
+        return articles;
     }
 
-    @RequestMapping(value = "/{aid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/aid={aid}", method = RequestMethod.GET)
     public JsonResult<Article> getArticleById(@PathVariable int aid) {
         Article article = articleService.getArticleById(aid);
         System.out.println(article);
@@ -82,9 +81,11 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/dustbin", method = RequestMethod.PUT)
-    public JsonResult<String> updateArticleState(int[] aids, Integer state) {
-        if (articleService.updateArticleState(aids, state) == aids.length) {
-            return new JsonResult<String>(200, "删除成功!");
+    public JsonResult<String> updateArticleState(Integer[] aids, Integer state) {
+        for (Integer aid:aids) {
+            if (articleService.updateArticleState(aid, state) == aids.length) {
+                return new JsonResult<String>(200, "删除成功!");
+            }
         }
         return new JsonResult<String>(400, "删除失败!");
     }

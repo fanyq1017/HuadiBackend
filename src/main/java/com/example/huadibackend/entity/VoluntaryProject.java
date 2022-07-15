@@ -16,13 +16,15 @@ https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/index.html#/projectInfo/6C0A10D
 @AllArgsConstructor
 @NoArgsConstructor
 public class VoluntaryProject {
-    private String name;
-    private String projectId;
-    private LocalDate projectStartTime;//项目起始时间
-    private LocalDate projectEndTime;//项目终止时间
-    private LocalDateTime publishTime;//发布时间
-    private LocalDate recruitmentStartTime;//招聘开始时间
-    private LocalDate recruitmentEndTime; //招聘截止日期
-    private String client ;//服务对象
-    private String projectInfo;//志愿项目信息
+    private Integer pId;//项目ID
+    private String pName;//项目名称
+    private Integer pType;//项目类型
+    private String pLocation;//项目地点
+    private LocalDate pProjectStart;//项目起始时间
+    private LocalDate pProjectEnd;//项目终止时间
+    private LocalDateTime pPublishDate;//发布时间
+    private LocalDate recruitStart;//招聘开始时间
+    private LocalDate recruitEnd; //招聘截止日期
+    private String serveClient ;//服务对象
+    private String pInfo;//志愿项目信息
 }

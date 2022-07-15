@@ -15,11 +15,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.UUID;
 
+import static com.example.huadibackend.controller.BaseConfig.baseurl;
 
 
 @Controller
-public class formController {
-    public static final String baseurl = "http://10.134.48.4:8080";
+public class formController extends BaseConfig{
     @GetMapping("/form_layouts")//上传文件的初步模型
     public String formLayouts(){
         return "form/form_layouts";

@@ -7,7 +7,6 @@ import com.example.huadibackend.entity.VoluntaryProject;
 import org.springframework.stereotype.Service;
 
 public interface VoluntaryAttributeService {
-    IPage<VoluntaryProject> findByAttribute(VoluntaryAttribute voluntaryAttribute);
+    IPage<Integer> findByAttribute(Page<Integer> page,VoluntaryAttribute voluntaryAttribute);
 
-    IPage<VoluntaryProject> findByAttribute(Page<VoluntaryProject> page, VoluntaryAttribute voluntaryAttribute);
 }

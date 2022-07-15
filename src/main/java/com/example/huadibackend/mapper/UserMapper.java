@@ -1,12 +1,13 @@
 package com.example.huadibackend.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.huadibackend.entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     @Select("select * from user where u_id = #{uid}")
     User selectById(int uid);
 

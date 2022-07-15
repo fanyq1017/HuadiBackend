@@ -1,6 +1,8 @@
 package com.example.huadibackend.service.serviceimpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.Article;
 import com.example.huadibackend.mapper.ArticleMapper;
 import com.example.huadibackend.service.ArticleService;
@@ -47,6 +49,13 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
+    public IPage<Article> selectByStateType(Integer state,Page<Article> page,Integer type){
+        QueryWrapper<Article> qw = new QueryWrapper<>();
+        qw.eq("state",state);
+        qw.eq(type ==0,"type",type);
+        return articleMapper.selectPage(page,qw);
+    }
+
     public String stripHtml(String content) {
         content = content.replaceAll("<p .*?>", "");
         content = content.replaceAll("<br\\s*/?>", "");
@@ -60,20 +69,19 @@ public class ArticleServiceImpl implements ArticleService {
         return date;
     }
 
-    @Override
-    public List<Article> getArticleByState(Integer state, Integer page, Integer count, String keywords) {
-        return null;
-    }
 
-    @Override
-    public int getArticleCountByState(Integer state, int uid, String keywords) {
-        return 0;
-    }
+//    @Override
+//    public IPage<Article> getArticleByState(Integer state, Page<Article> page) {
+//        QueryWrapper<Article> qw = new QueryWrapper<>();
+//        qw.eq("state",state);
+//        return articleMapper.selectPage(page,qw);
+//    }
 
 
+
     @Override
-    public int updateArticleState(int[] aids, Integer state) {
-        return articleMapper.updateArticleState(aids, state);
+    public int updateArticleState(Integer aid, Integer state) {
+        return articleMapper.updateArticleState(aid, state);
     }
 
     @Override
@@ -90,7 +98,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void pvStatisticsPerDay() {
-
     }
 
     @Override
@@ -104,14 +111,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int deleteArticleById(int[] aid) {
+    public int deleteArticleById(Integer[] aids) {
         QueryWrapper<Article> qw = new QueryWrapper<>();
-        Integer[] aids = intToInteger(aid);
         List<Integer> resultList= new ArrayList<>(Arrays.asList(aids));
-        //    qw.orderByDesc("publishtime");
         qw.in("id",resultList);
-        int result = articleMapper.deleteArticleById(qw);
-        return result;
+        return articleMapper.deleteArticleById(qw);
+
     }
 
     private Integer[] intToInteger(int[] ints) {
