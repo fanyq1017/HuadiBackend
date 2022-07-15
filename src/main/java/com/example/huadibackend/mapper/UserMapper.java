@@ -7,22 +7,25 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    @Select("select * from user where u_id = #{id}")
-    User selectById(int userId);
+    @Select("select * from user where u_id = #{uid}")
+    User selectById(int uid);
 
-    @Delete("delete from user where u_id = #{userId}")
-    void deleteById(int userId);
+    @Update("update user set valid = 0  where u_id = #{uid}")
+    void deleteById(int uid);
 
-    @Options(useGeneratedKeys = true,keyProperty = "userId")
-    @Insert("insert into user(u_id,u_name,u_password,u_type,u_valid,u_telephone)" +
-            "values(#{userId},#{name},#{password},#{type},#{valid},#{telephone})")
-    void insertUser(User user);  //通常用于注册使用，表单返回
+    @Options(useGeneratedKeys = true)
+    @Insert("insert into user(username,password,type,valid,telephone)" +
+            "values(#{username},#{password},#{type},#{valid},#{telephone})")
+    int insertUser(User user);  //通常用于注册使用，表单返回
 
-    @Update("update user set u_name=#{Username},u_password={password},u_type = {type}," +
-            "u_valid=#{valid},u_telephone = #{telephone} where u_id = userId")
+    @Update("update user set username=#{username},password=#{password},type =#{type}," +
+            "valid=#{valid},telephone = #{telephone} where u_Id = #{uId}")
     void updateUserInformation(User user);
 
     @Select("select * from user")
     List<User> ShowUserInformation(); //返回所有信息用于管理员进行管理
+
+    @Select("select uId,name,telephone from user where username = #{username} and password = #{password}")
+    User Login(String username, String password);
 
 }

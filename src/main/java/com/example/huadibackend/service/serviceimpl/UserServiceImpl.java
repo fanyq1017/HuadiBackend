@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -24,8 +25,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void insertUser(User user) {
+    public int insertUser(User user) {
         userMapper.insertUser(user);
+        return 0;
     }
 
     @Override
@@ -37,4 +39,10 @@ public class UserServiceImpl implements UserService {
     public List<User> ShowUserInformation() {
         return userMapper.ShowUserInformation();
     }
+
+    @Override
+    public User userLogin(String username, String password) {
+        return userMapper.Login(username,password);
+    }
+
 }

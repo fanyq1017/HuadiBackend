@@ -12,10 +12,12 @@ public interface UserService {
 
     void deleteById(int userId);
 
-    void insertUser(User user);  //通常用于注册使用，表单返回
+    int insertUser(User user);  //通常用于注册使用，表单返回
 
     void updateUserInformation(User user);
 
     List<User> ShowUserInformation(); //返回所有信息用于管理员进行管理
+
+    public User userLogin(String username, String password);
 
 }

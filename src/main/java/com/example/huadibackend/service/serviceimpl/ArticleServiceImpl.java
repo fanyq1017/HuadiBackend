@@ -1,5 +1,6 @@
 package com.example.huadibackend.service.serviceimpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.huadibackend.entity.Article;
 import com.example.huadibackend.mapper.ArticleMapper;
 import com.example.huadibackend.service.ArticleService;
@@ -8,9 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import javax.servlet.http.HttpSession;
+import java.util.*;
 
 @Service
 @Transactional
@@ -55,7 +54,7 @@ public class ArticleServiceImpl implements ArticleService {
         return content;
     }
 
-    private Date getCurrentTime(){
+    private Date getCurrentTime() {
         Date date = new Date();
         date.setTime(System.currentTimeMillis());
         return date;
@@ -67,13 +66,14 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int getArticleCountByState(Integer state, Long uid, String keywords) {
+    public int getArticleCountByState(Integer state, int uid, String keywords) {
         return 0;
     }
 
+
     @Override
-    public int updateArticleState(Long[] aids, Integer state) {
-        return 0;
+    public int updateArticleState(int[] aids, Integer state) {
+        return articleMapper.updateArticleState(aids, state);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article getArticleById(int aid) {
-        Article article= articleMapper.getArticleById(aid);
+        Article article = articleMapper.getArticleById(aid);
         System.out.println(aid);
         return article;
     }
@@ -101,5 +101,25 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<String> getCategories() {
         return null;
+    }
+
+    @Override
+    public int deleteArticleById(int[] aid) {
+        QueryWrapper<Article> qw = new QueryWrapper<>();
+        Integer[] aids = intToInteger(aid);
+        List<Integer> resultList= new ArrayList<>(Arrays.asList(aids));
+        //    qw.orderByDesc("publishtime");
+        qw.in("id",resultList);
+        int result = articleMapper.deleteArticleById(qw);
+        return result;
+    }
+
+    private Integer[] intToInteger(int[] ints) {
+        int length = ints.length;
+        Integer[] integers = new Integer[length];
+        for (int i = 0; i < length; i++) {
+            integers[i] = ints[i];
+        }
+        return integers;
     }
 }

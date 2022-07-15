@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    private int userId;
-    private String name;
+    private Integer uId;
+    private String username;
     private String password;
-    private int type;
-    private int valid;
+    private Integer type;
+    private Integer valid;
     private String telephone;
 }

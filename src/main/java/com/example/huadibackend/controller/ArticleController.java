@@ -66,7 +66,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Map<String, Object> getArticleByState(@RequestParam(value = "state", defaultValue = "-1") Integer state, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "count", defaultValue = "6") Integer count,String keywords) {
-        int totalCount = articleService.getArticleCountByState(state, 1L,keywords);//test 这里的1L是用作测试用的
+        int totalCount = articleService.getArticleCountByState(state, 1,keywords);//test 这里的1L是用作测试用的
         List<Article> articles = articleService.getArticleByState(state, page, count,keywords);
         Map<String, Object> map = new HashMap<>();
         map.put("totalCount", totalCount);
@@ -82,7 +82,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/dustbin", method = RequestMethod.PUT)
-    public JsonResult<String> updateArticleState(Long[] aids, Integer state) {
+    public JsonResult<String> updateArticleState(int[] aids, Integer state) {
         if (articleService.updateArticleState(aids, state) == aids.length) {
             return new JsonResult<String>(200, "删除成功!");
         }

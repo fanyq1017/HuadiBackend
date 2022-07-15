@@ -25,8 +25,8 @@ CREATE TABLE `article`  (
   `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '发布信息的唯一标识',
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布文件的标题',
   `u_id` int(0) NULL DEFAULT NULL COMMENT '发布作者的id',
-  `publishdate` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '第一次发布时间',
-  `edittime` datetime(0) NULL DEFAULT NULL COMMENT '文章编辑时间\"类似最后一次修改的时间\"',
+  `publishdate` datetime(0) NULL DEFAULT NULL COMMENT '第一次发布时间',
+  `edittime` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '文章编辑时间\"类似最后一次修改的时间\"',
   `mdContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '管理员发布的markdown文件的源码',
   `htmlContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT 'html源码',
   `state` int(0) NULL DEFAULT NULL COMMENT '0代表草稿箱，1代表已发表，2代表已删除',
@@ -66,11 +66,11 @@ CREATE TABLE `recruit`  (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `u_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '唯一标识组',
-  `u_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名',
-  `u_password` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户密码',
-  `u_type` int(0) NOT NULL COMMENT '0是用户，1是管理员，2是超级管理员',
-  `u_valid` int(0) NOT NULL COMMENT '0是无效，1是有效',
-  `u_telephone` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户电话',
+  `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名',
+  `password` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户密码',
+  `type` int(0) NOT NULL COMMENT '0是用户，1是管理员，2是超级管理员',
+  `valid` int(0) NOT NULL COMMENT '0是无效，1是有效',
+  `telephone` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户电话',
   PRIMARY KEY (`u_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表，主要设计用户。用户：0，管理员：1，超级管理员：2' ROW_FORMAT = Dynamic;
 
