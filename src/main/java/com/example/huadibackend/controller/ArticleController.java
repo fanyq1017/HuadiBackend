@@ -68,11 +68,11 @@ public class ArticleController extends BaseConfig {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
-    public IPage<Article> getArticleByState(@RequestParam(value = "state", defaultValue = "-1")Integer state, @RequestParam(value = "page", defaultValue = "1") Integer current, @RequestParam(value = "count", defaultValue = "6")Integer size,@RequestParam(value = "type",defaultValue = "0")Integer type) {
+    public JsonResult<IPage<Article>> getArticleByState(@RequestParam(value = "state", defaultValue = "-1")Integer state, @RequestParam(value = "page", defaultValue = "1") Integer current, @RequestParam(value = "count", defaultValue = "6")Integer size,@RequestParam(value = "type",defaultValue = "0")Integer type) {
         Page<Article> page = new Page<>(current,size);
       //  int totalCount = articleService.getArticleCountByState(state, 1);//test 这里的1L是用作测试用的 uid不一定要不要
         IPage<Article> articles = articleService.selectByStateType(state,page,type);
-        return articles;
+        return new JsonResult<>(200, articles);
     }
 
     @RequestMapping(value = "/query" ,method = RequestMethod.GET)
