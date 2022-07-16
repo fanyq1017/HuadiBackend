@@ -30,7 +30,7 @@ public interface ArticleService {
 
     int restoreArticle(Integer articleId);
 
-    Article getArticleById(int aid);
+    Article getArticleById(Integer aid);
 
 
     void pvStatisticsPerDay();

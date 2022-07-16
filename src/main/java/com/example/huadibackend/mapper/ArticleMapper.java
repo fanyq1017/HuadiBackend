@@ -16,19 +16,18 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
     @Options(useGeneratedKeys = true)
-    @Insert("insert into article(title,u_id,publishdate,mdContent," +
-            "state,edittime,type,htmlContent) values(#{title}," +
-            " #{uid},#{publishDate},#{mdContent},#{state},#{editTime},#{type},#{htmlContent})")
+    @Insert("insert into article(title,u_id,publish_date,md_content," +
+            "state,edit_time,type,html_content) values(#{title}," +
+            " #{uId},#{publishDate},#{mdContent},#{state},#{editTime},#{type},#{htmlContent})")
     int addNewArticle(Article article);
 
     @Update("update article set title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},editTime=#{editTime} where id =#{id}")
     int updateArticle(Article article);
 
-    int getArticleCountByState(@Param("state") Integer state, @Param("uid") int uid, @Param("keywords") String keywords);
+    int getArticleCountByState(@Param("state") Integer state, @Param("uid") int uid);
 
-    int updateArticleState(@Param("aids") Integer aid, @Param("state") Integer state);
-
-    int updateArticleStateById(@Param("articleId") Integer articleId, @Param("state") Integer state);
+    @Update("update article set state= #{state} where id = #{aid}")
+    int updateArticleState(@Param("aid") Integer aid, @Param("state") Integer state);
 
     @Delete("delete from article ${ew.customSqlSegment}")
     int deleteArticleById(@Param("ew") QueryWrapper<Article> qw);

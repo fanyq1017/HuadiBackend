@@ -3,6 +3,7 @@ package com.example.huadibackend.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.huadibackend.config.BaseConfig;
 import com.example.huadibackend.entity.Article;
 import com.example.huadibackend.service.ArticleService;
 import com.example.huadibackend.util.JsonResult;
@@ -24,7 +25,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/article")
-public class ArticleController extends BaseConfig{
+public class ArticleController extends BaseConfig {
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
@@ -66,16 +67,19 @@ public class ArticleController extends BaseConfig{
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public IPage<Article> getArticleByState(@RequestParam(value = "state", defaultValue = "-1") Integer state, @RequestParam(value = "page", defaultValue = "1") Integer current, @RequestParam(value = "count", defaultValue = "6") Integer size,@RequestParam(value = "type",defaultValue = "0")Integer type) {
+    @ResponseBody
+    public IPage<Article> getArticleByState(@RequestParam(value = "state", defaultValue = "-1")Integer state, @RequestParam(value = "page", defaultValue = "1") Integer current, @RequestParam(value = "count", defaultValue = "6")Integer size,@RequestParam(value = "type",defaultValue = "0")Integer type) {
         Page<Article> page = new Page<>(current,size);
       //  int totalCount = articleService.getArticleCountByState(state, 1);//test 这里的1L是用作测试用的 uid不一定要不要
         IPage<Article> articles = articleService.selectByStateType(state,page,type);
         return articles;
     }
 
-    @RequestMapping(value = "/aid={aid}", method = RequestMethod.GET)
-    public JsonResult<Article> getArticleById(@PathVariable int aid) {
-        Article article = articleService.getArticleById(aid);
+    @RequestMapping(value = "/query" ,method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult<Article> getArticleById(@RequestParam(value = "id")Integer id) {
+        System.out.println(id);
+        Article article = articleService.getArticleById(id);
         System.out.println(article);
         return new JsonResult<Article>(200,article) ;
     }
@@ -88,14 +92,6 @@ public class ArticleController extends BaseConfig{
             }
         }
         return new JsonResult<String>(400, "删除失败!");
-    }
-
-    @RequestMapping(value = "/restore", method = RequestMethod.PUT)
-    public JsonResult<String> restoreArticle(Integer articleId) {
-        if (articleService.restoreArticle(articleId) == 1) {
-            return new JsonResult<String>(200, "还原成功!");
-        }
-        return new JsonResult<String>(400, "还原失败!");
     }
 
     @RequestMapping("/dataStatistics")

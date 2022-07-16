@@ -19,9 +19,10 @@ public class UserServiceTests {
 
     @Test
     public void add()  {
-
-        User user = new User(null, "aaa","123",1,0,"123");
-        userService.insertUser(user);
+        for (int i=0;i<10;i++) {
+            User user = new User(null, "lkc", "lkc123", 1, 1, "123177888");
+            userService.insertUser(user);
+        }
     }
 
     @Test
@@ -32,8 +33,25 @@ public class UserServiceTests {
 
     @Test
     public void delete() {
-
-        userService.deleteById(1);
-
+        Integer uid = 5;
+        userService.deletebyId(uid);
     }
+    @Test
+    public void Check()  {
+        int isRepeat = userService.checkUsername("fyq");
+        System.out.println(isRepeat);
+    }
+
+    @Test
+    public void updateById(){
+         userService.updateStateById(0,7);
+    }
+
+    @Test
+    public void select(){
+        Integer uid =2;
+        System.out.println(uid);
+        System.out.println( userService.selectById(uid));
+    }
+
 }

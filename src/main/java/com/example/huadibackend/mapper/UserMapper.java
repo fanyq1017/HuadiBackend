@@ -9,10 +9,10 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     @Select("select * from user where u_id = #{uid}")
-    User selectById(int uid);
+    User findById(Integer uid);
 
-    @Update("update user set valid = 0  where u_id = #{uid}")
-    void deleteById(int uid);
+    @Update("update user set valid =0 where u_id = #{uid}")
+    int deletebyId(Integer uid);
 
     @Options(useGeneratedKeys = true)
     @Insert("insert into user(username,password,type,valid,telephone)" +
@@ -26,7 +26,9 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select * from user")
     List<User> ShowUserInformation(); //返回所有信息用于管理员进行管理
 
-    @Select("select uId,name,telephone from user where username = #{username} and password = #{password}")
+    @Select("select u_Id,username,telephone from user where username = #{username} and password = #{password}")
     User Login(String username, String password);
 
+    @Update("update user set type =#{type} where u_id =#{uid}")
+    int updateStateById(Integer type,Integer uid);
 }

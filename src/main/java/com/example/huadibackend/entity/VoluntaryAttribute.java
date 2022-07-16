@@ -1,8 +1,13 @@
 package com.example.huadibackend.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 
 /*
@@ -11,14 +16,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VoluntaryAttribute {
-    private int area;
-    private int classification;
-    private int status;
-    private int registrationScope;
-    private int clients;
-    private int population;
-    private int ProjectId ;
+@TableName("voluntary_attribute")
+public class VoluntaryAttribute implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "va_id",type= IdType.AUTO)
+    private Integer va_id;
+
+    private Integer serveType;
+    private Integer projectState;
+    private Integer applyType;
+    private Integer serveClient;
+    private Integer peopleNum;
+    private Integer regionCode;
+    private Integer pId;
 }
 /*
 *

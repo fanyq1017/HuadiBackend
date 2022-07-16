@@ -6,7 +6,9 @@ import com.example.huadibackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,13 +17,13 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public User selectById(int userId) {
-        return userMapper.selectById(userId);
+    public User selectById(Integer uid) {
+        return userMapper.findById(uid);
     }
 
     @Override
-    public void deleteById(int userId) {
-        userMapper.deleteById(userId);
+    public int deletebyId(Integer uid) {
+       return userMapper.deletebyId(uid);
     }
 
     @Override
@@ -42,7 +44,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User userLogin(String username, String password) {
-        return userMapper.Login(username,password);
+       return userMapper.Login(username,password);
+    }
+
+    @Override
+    public int checkUsername(String username) {
+        Map<String, Object> map =new HashMap<String, Object>();
+        map.put("username",username);
+        List<User> useres = userMapper.selectByMap(map);
+        int size = useres.size();
+        return (size);
+    }
+
+    @Override
+    public int updateStateById(Integer type, Integer uid) {
+        return userMapper.updateStateById(type,uid);
     }
 
 }

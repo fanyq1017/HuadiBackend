@@ -1,25 +1,20 @@
 package com.example.huadibackend.controller;
 
+import com.example.huadibackend.config.BaseConfig;
 import com.example.huadibackend.util.JsonResult;
-import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.UUID;
-
-import static com.example.huadibackend.controller.BaseConfig.baseurl;
 
 
 @Controller
-public class formController extends BaseConfig{
+public class formController extends BaseConfig {
     @GetMapping("/form_layouts")//上传文件的初步模型
     public String formLayouts(){
         return "form/form_layouts";

@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class Video {
-    private int videoId;
-    private int type;
-    private String location;
-    private String intro;
-    private String image;
+    private int vId;
+    private int vType;
+    private String vLocation;
+    private String vIntro;
+    private String vImage;
 }

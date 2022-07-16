@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class Article {
     private Integer id;
     private String title;
-    private Integer uid;
+    private Integer uId;
     private Timestamp publishDate;
     private Timestamp editTime;
     private String mdContent;

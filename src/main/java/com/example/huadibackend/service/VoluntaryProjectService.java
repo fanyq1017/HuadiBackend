@@ -8,8 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional
+
 public interface VoluntaryProjectService {
     int addProject(VoluntaryProject voluntaryProject);
 
@@ -20,4 +19,7 @@ public interface VoluntaryProjectService {
     VoluntaryProject selectById(Integer Id);
 
     IPage<VoluntaryProject> selectPageByUID(Page<VoluntaryProject> page, Integer UID);
-    }
+
+    IPage<VoluntaryProject> selectPageByRegioncode(Page<VoluntaryProject> page, Integer provinceRegionCode,Integer cityRegionCode,Integer districtRegionCode);
+
+}

@@ -37,7 +37,7 @@ public class VoluntaryActivityTests {
     @Test
     public void addProject() {
         Timestamp timestamp =new Timestamp(System.currentTimeMillis());
-        VoluntaryProject voluntaryProject =new VoluntaryProject(1,"1","1",1,"1",timestamp,timestamp,timestamp,timestamp,timestamp,"1","before update.",1,1,1);
+        VoluntaryProject voluntaryProject =new VoluntaryProject(null,"project1","1",1,"1",timestamp,timestamp,timestamp,timestamp,timestamp,timestamp,"1","1","before update.","a",1,1,1);
         voluntaryProjectService.addProject(voluntaryProject);
     }
 
@@ -46,19 +46,20 @@ public class VoluntaryActivityTests {
         System.out.println(voluntaryProjectService.selectById(1));
     }
 
-    @Test
-    public void findbyAttr(){
-        VoluntaryAttribute voluntaryAttribute =new VoluntaryAttribute(null,1,0,1,0,0,0,null);
-        Page<VoluntaryProject> page =new Page<>(1,5);
-        IPage<VoluntaryProject> ipage = voluntaryAttributeService.findByAttribute(page, voluntaryAttribute);
-        List<VoluntaryProject> res = ipage.getRecords();
-        System.out.println(res);
-    }
+//    @Test
+//    public void findbyAttr(){
+//        Timestamp timestamp =new Timestamp(System.currentTimeMillis());
+//        VoluntaryProject voluntaryProject =new VoluntaryProject(null,"1","project1","1",1,timestamp,timestamp,timestamp,timestamp,timestamp,"1","before update.","a",1,1,1);
+//        Page<VoluntaryProject> page =new Page<>(1,5);
+//        IPage<VoluntaryProject> ipage = voluntaryAttributeService.findByAttribute(page, voluntaryAttribute);
+//        List<VoluntaryProject> res = ipage.getRecords();
+//        System.out.println(res);
+//    }
 
     @Test
     public void updateById(){
         Timestamp timestamp =new Timestamp(System.currentTimeMillis());
-        VoluntaryProject voluntaryProject =new VoluntaryProject(1,"1","1",1,"1",timestamp,timestamp,timestamp,timestamp,timestamp,"1","after update.",1,1,1);
+        VoluntaryProject voluntaryProject =new VoluntaryProject(null,"project1","1",1,"1",timestamp,timestamp,timestamp,timestamp,timestamp,timestamp,"1","1","before update.","a",1,1,1);
         System.out.println(voluntaryProjectService.selectById(voluntaryProject.getPId()));
         voluntaryProjectService.updateById(voluntaryProject);
         System.out.println(voluntaryProjectService.selectById(voluntaryProject.getPId()));

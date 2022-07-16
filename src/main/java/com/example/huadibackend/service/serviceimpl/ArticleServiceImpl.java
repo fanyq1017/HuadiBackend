@@ -90,7 +90,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article getArticleById(int aid) {
+    public Article getArticleById(Integer aid) {
         Article article = articleMapper.getArticleById(aid);
         System.out.println(aid);
         return article;
@@ -119,12 +119,5 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
-    private Integer[] intToInteger(int[] ints) {
-        int length = ints.length;
-        Integer[] integers = new Integer[length];
-        for (int i = 0; i < length; i++) {
-            integers[i] = ints[i];
-        }
-        return integers;
-    }
+
 }
