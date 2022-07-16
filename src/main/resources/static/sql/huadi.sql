@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 15/07/2022 15:04:02
+ Date: 16/07/2022 11:13:01
 */
 
 SET NAMES utf8mb4;
@@ -32,8 +32,9 @@ CREATE TABLE `article`  (
   `state` int(0) NULL DEFAULT NULL COMMENT '0代表草稿箱，1代表已发表，2代表已删除',
   `type` int(0) NULL DEFAULT NULL COMMENT '0志愿活动1新闻2专题活动之类的',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `u_id`(`u_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  INDEX `u_id`(`u_id`) USING BTREE,
+  CONSTRAINT `article_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `user` (`u_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for help
@@ -47,18 +48,6 @@ CREATE TABLE `help`  (
   `h_intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '帮扶信息',
   PRIMARY KEY (`h_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '雷锋热线中的帮扶表，只需打开列表查询帮扶相关信息即可' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for province
--- ----------------------------
-DROP TABLE IF EXISTS `province`;
-CREATE TABLE `province`  (
-  `region_code` int(0) NOT NULL COMMENT '地区的邮编，每个地区的邮编都不一样',
-  `region_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地区的名字',
-  `region_level` int(0) NULL DEFAULT NULL COMMENT '区域的等级，1是直辖市或者省，2是地级市或者直辖市的区',
-  `region_parent_id` int(0) NULL DEFAULT NULL COMMENT '父节点的邮编，直辖市或者省的父邮编为0',
-  PRIMARY KEY (`region_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for recruit
@@ -87,6 +76,16 @@ CREATE TABLE `user`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表，主要设计用户。用户：0，管理员：1，超级管理员：2' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, 'aaa', '123456', 1, 0, '123');
+INSERT INTO `user` VALUES (2, 'aaa', '123', 1, 0, '123');
+INSERT INTO `user` VALUES (3, 'aaa', '123', 1, 0, '123');
+INSERT INTO `user` VALUES (4, 'aaa', '123', 1, 0, '123');
+INSERT INTO `user` VALUES (5, 'aaa', '123', 1, 0, '123');
+INSERT INTO `user` VALUES (6, 'aaa', '123', 1, 0, '123');
+
+-- ----------------------------
 -- Table structure for video
 -- ----------------------------
 DROP TABLE IF EXISTS `video`;
@@ -106,39 +105,34 @@ DROP TABLE IF EXISTS `voluntaryproject`;
 CREATE TABLE `voluntaryproject`  (
   `p_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '项目编号',
   `p_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '项目名称',
-  `p_type` int(0) NULL DEFAULT NULL COMMENT '项目服务类别0应急救援之类的',
+  `p_type` int(0) NULL DEFAULT NULL COMMENT '项目服务类别0是疫情防控1是卫生健康2是社区服务3是环境保护',
   `p_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '项目地点',
-  `p_publishDate` datetime(0) NULL DEFAULT NULL COMMENT '项目发布日期',
-  `p_projectStart` datetime(0) NULL DEFAULT NULL COMMENT '项目开始时间',
-  `p_projectEnd` datetime(0) NULL DEFAULT NULL COMMENT '项目结束时间',
-  `p_recruitStart` datetime(0) NULL DEFAULT NULL COMMENT '招募开始时间',
-  `p_recruitEnd` datetime(0) NULL DEFAULT NULL COMMENT '招募结束时间',
+  `p_publishDate` date NULL DEFAULT NULL COMMENT '项目发布日期',
+  `p_projectStart` date NULL DEFAULT NULL COMMENT '项目开始时间',
+  `p_projectEnd` date NULL DEFAULT NULL COMMENT '项目结束时间',
+  `p_recruitStart` date NULL DEFAULT NULL COMMENT '招募开始时间',
+  `p_recruitEnd` date NULL DEFAULT NULL COMMENT '招募结束时间',
   `p_serveclient` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '服务对象信息',
   `p_projectInfo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '项目信息',
   `p_people` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '项目负责人，为了方便不与用户做外键',
   `p_telephone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '负责人联系方式',
   `p_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '能展示项目信息图片的位置',
+  `p_provinceRegioncode` int(0) NULL DEFAULT NULL COMMENT '省编号（四川省遂宁市船山区）（北京市东城区）',
+  `p_cityRegioncode` int(0) NULL DEFAULT NULL COMMENT '市编号',
+  `p_districtRegioncode` int(0) NULL DEFAULT NULL COMMENT '区编号',
   PRIMARY KEY (`p_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for voluntarysummary
+-- Records of voluntaryproject
 -- ----------------------------
-DROP TABLE IF EXISTS `voluntarysummary`;
-CREATE TABLE `voluntarysummary`  (
-  `s_id` int(0) NOT NULL COMMENT '概述的id',
-  `s_serveType` int(0) NULL DEFAULT NULL COMMENT '服务的类别，社区服务什么的',
-  `s_projectState` int(0) NULL DEFAULT NULL COMMENT '项目的状态，招募待启动，招募中',
-  `s_applyType` int(0) NULL DEFAULT NULL COMMENT '报名范围',
-  `s_serveClient` int(0) NULL DEFAULT NULL COMMENT '服务对象',
-  `s_peopleNum` int(0) NULL DEFAULT NULL COMMENT '项目人数范围',
-  `region_code` int(0) NULL DEFAULT NULL COMMENT '外键，与province表邮政编号',
-  `p_id` int(0) NULL DEFAULT NULL COMMENT '外键，与voluntaryproject表的p_id',
-  PRIMARY KEY (`s_id`) USING BTREE,
-  INDEX `region_code`(`region_code`) USING BTREE,
-  INDEX `p_id`(`p_id`) USING BTREE,
-  CONSTRAINT `voluntarysummary_ibfk_1` FOREIGN KEY (`region_code`) REFERENCES `province` (`region_code`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `voluntarysummary_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `voluntaryproject` (`p_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+INSERT INTO `voluntaryproject` VALUES (1, '全员核酸', 0, '合肥市巢湖市烔炀镇人民政府', '2022-07-16', '2022-07-16', '2022-07-17', '2022-07-16', '2022-07-17', '	社会公众', '现场秩序维护及信息录入', '聂汉明', '13586573384', 'image/vonlunteerImage1.png', 340000, 340100, 340181);
+INSERT INTO `voluntaryproject` VALUES (2, '疫情防控', 1, '遂宁市船山区凯丽滨江-一期', '2022-07-16', '2022-07-16', '2022-07-24', '2022-07-16', '2022-07-24', '	城镇居民,其他', '在辖区开展疫情防控，排查风险区返遂人员', '章立春', '18114356724', 'image/vonlunteerImage2.png', 510000, 510900, 510903);
+INSERT INTO `voluntaryproject` VALUES (3, '健康教育知识讲座', 1, '遂宁市船山区平寨村', '2022-07-16', '2022-07-16', '2022-07-16', '2022-07-16', '2022-07-16', '社会公众', '2022-7-16上午09:30-10:30开展健康讲座', '利栏', '18932069760', 'image/vonlunteerImage2.png', 510000, 510900, 510903);
+INSERT INTO `voluntaryproject` VALUES (4, '城区道路交通劝导员 ', 2, '遂宁市船山区太和大道北段', '2022-07-16', '2022-07-16', '2022-07-17', '2022-07-16', '2022-07-16', '残障人士,妇女,老年人,儿童', '对射洪市城区部分街道交通不文明行为进行劝阻', '邓韬', '15828935360', 'image/vonlunteerImage3.png', 510000, 510900, 510903);
+INSERT INTO `voluntaryproject` VALUES (5, '	\r\n人居环境整治行动', 3, '遂宁市船山区X195', '2022-07-16', '2022-07-16', '2022-07-25', '2022-07-16', '2022-07-24', '	农村居民,城镇居民,社会公众', '为进一步加强人居环境整治，建设生态宜居美丽乡村，7月17日，云山社区开展辖区人居环境整治行动。', '段桓村', '18758425243', 'image/vonlunteerImage4.png', 510000, 510900, 510903);
+INSERT INTO `voluntaryproject` VALUES (6, '征集生物多样性科普作品', 3, '北京市昌平区北京王府学校', '2022-03-22', '2022-03-22', '2022-09-22', '2022-03-22', '2022-09-22', '社会公众,儿童', '长期征集具有科普性的生物多样性作品如漫画、幽默感人小故事、自拍呼吁保护野生动物视频、野生动物保护创意策划书等；形式不限，要求原创（无版权纠纷） 符合条件的作品可获得志愿服务证书，公益活动时长', '大东', '13370142146', 'image/vonlunteerImage4.png', 110000, 110100, 110101);
+INSERT INTO `voluntaryproject` VALUES (7, '暖心365流动儿童关爱207202期', 2, '	东城区崇文门东大街24号', '2021-07-20', '2021-07-20', '2022-07-19', '2021-07-20', '2022-07-19', '	残障人士,优抚对象,其他,儿童', '空闲时间，居家制作支教小视频，在线进行支教服务', '暖暖', '13564326786', 'image/vonlunteerImage3.png', 110000, 110100, 110101);
+INSERT INTO `voluntaryproject` VALUES (8, '周末大扫除', 2, '东城区南门仓胡同5号解放军总医院第七医学中心综合服务楼西侧', '2021-07-20', '2022-07-21', '2022-07-25', '2022-07-21', '2022-07-24', '	其他', '参与志愿者2021年7月24日上午9:00前于综合服务楼西侧集合，着力清理社区垃圾及擦拭所有宣传栏。请志愿者准时到达集合地点，开展活动。', '王柜赋', '13520862875', 'image/vonlunteerImage3.png', 110000, 110100, 110101);
 
 SET FOREIGN_KEY_CHECKS = 1;
