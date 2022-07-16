@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 14/07/2022 15:11:36
+ Date: 15/07/2022 15:04:02
 */
 
 SET NAMES utf8mb4;
@@ -47,6 +47,18 @@ CREATE TABLE `help`  (
   `h_intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '帮扶信息',
   PRIMARY KEY (`h_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '雷锋热线中的帮扶表，只需打开列表查询帮扶相关信息即可' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for province
+-- ----------------------------
+DROP TABLE IF EXISTS `province`;
+CREATE TABLE `province`  (
+  `region_code` int(0) NOT NULL COMMENT '地区的邮编，每个地区的邮编都不一样',
+  `region_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地区的名字',
+  `region_level` int(0) NULL DEFAULT NULL COMMENT '区域的等级，1是直辖市或者省，2是地级市或者直辖市的区',
+  `region_parent_id` int(0) NULL DEFAULT NULL COMMENT '父节点的邮编，直辖市或者省的父邮编为0',
+  PRIMARY KEY (`region_code`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for recruit
@@ -103,7 +115,30 @@ CREATE TABLE `voluntaryproject`  (
   `p_recruitEnd` datetime(0) NULL DEFAULT NULL COMMENT '招募结束时间',
   `p_serveclient` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '服务对象信息',
   `p_projectInfo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '项目信息',
+  `p_people` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '项目负责人，为了方便不与用户做外键',
+  `p_telephone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '负责人联系方式',
+  `p_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '能展示项目信息图片的位置',
   PRIMARY KEY (`p_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for voluntarysummary
+-- ----------------------------
+DROP TABLE IF EXISTS `voluntarysummary`;
+CREATE TABLE `voluntarysummary`  (
+  `s_id` int(0) NOT NULL COMMENT '概述的id',
+  `s_serveType` int(0) NULL DEFAULT NULL COMMENT '服务的类别，社区服务什么的',
+  `s_projectState` int(0) NULL DEFAULT NULL COMMENT '项目的状态，招募待启动，招募中',
+  `s_applyType` int(0) NULL DEFAULT NULL COMMENT '报名范围',
+  `s_serveClient` int(0) NULL DEFAULT NULL COMMENT '服务对象',
+  `s_peopleNum` int(0) NULL DEFAULT NULL COMMENT '项目人数范围',
+  `region_code` int(0) NULL DEFAULT NULL COMMENT '外键，与province表邮政编号',
+  `p_id` int(0) NULL DEFAULT NULL COMMENT '外键，与voluntaryproject表的p_id',
+  PRIMARY KEY (`s_id`) USING BTREE,
+  INDEX `region_code`(`region_code`) USING BTREE,
+  INDEX `p_id`(`p_id`) USING BTREE,
+  CONSTRAINT `voluntarysummary_ibfk_1` FOREIGN KEY (`region_code`) REFERENCES `province` (`region_code`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `voluntarysummary_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `voluntaryproject` (`p_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
