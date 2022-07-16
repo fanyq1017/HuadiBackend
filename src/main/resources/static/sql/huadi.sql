@@ -99,10 +99,10 @@ CREATE TABLE `voluntaryproject`  (
   `p_publishDate` datetime(0) NULL DEFAULT NULL COMMENT '项目发布日期',
   `p_projectStart` datetime(0) NULL DEFAULT NULL COMMENT '项目开始时间',
   `p_projectEnd` datetime(0) NULL DEFAULT NULL COMMENT '项目结束时间',
-  `recruitStart` datetime(0) NULL DEFAULT NULL COMMENT '招募开始时间',
-  `recruitEnd` datetime(0) NULL DEFAULT NULL COMMENT '招募结束时间',
-  `serveclient` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '服务对象信息',
-  `p_Info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '项目信息',
+  `p_recruitStart` datetime(0) NULL DEFAULT NULL COMMENT '招募开始时间',
+  `p_recruitEnd` datetime(0) NULL DEFAULT NULL COMMENT '招募结束时间',
+  `p_serveclient` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '服务对象信息',
+  `p_projectInfo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '项目信息',
   PRIMARY KEY (`p_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
