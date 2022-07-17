@@ -23,6 +23,6 @@ public interface UserService {
 
     int checkUsername(String username);
 
-    int updateStateById(Integer type, Integer uid);
+    int updateTypeById(Integer type, Integer uid);
 
 }

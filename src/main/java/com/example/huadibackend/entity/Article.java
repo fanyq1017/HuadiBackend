@@ -21,4 +21,6 @@ public class Article {
     private Integer type;
 
 
+
+
 }

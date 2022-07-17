@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -63,6 +65,15 @@ public class VoluntaryActivityTests {
         System.out.println(voluntaryProjectService.selectById(voluntaryProject.getPId()));
         voluntaryProjectService.updateById(voluntaryProject);
         System.out.println(voluntaryProjectService.selectById(voluntaryProject.getPId()));
+    }
+
+    @Test
+    public void str2Timestamp(){
+         String time1 = "2022-10-04";
+         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+         String time = df.format(new Date());
+
+        System.out.println(Timestamp.valueOf(time));
     }
 
 

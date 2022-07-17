@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateStateById(Integer type, Integer uid) {
+    public int updateTypeById(Integer type, Integer uid) {
         return userMapper.updateStateById(type,uid);
     }
 

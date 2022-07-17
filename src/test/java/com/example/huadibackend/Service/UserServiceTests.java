@@ -44,7 +44,7 @@ public class UserServiceTests {
 
     @Test
     public void updateById(){
-         userService.updateStateById(0,7);
+         userService.updateTypeById(0,7);
     }
 
     @Test
@@ -52,6 +52,14 @@ public class UserServiceTests {
         Integer uid =2;
         System.out.println(uid);
         System.out.println( userService.selectById(uid));
+    }
+
+    @Test
+    public void selectnotnull(){
+        Integer uid =100;
+        System.out.println(uid);
+       User user=  userService.selectById(uid);
+        System.out.println(user == null );
     }
 
 }
