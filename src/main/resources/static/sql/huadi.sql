@@ -47,7 +47,7 @@ CREATE TABLE `help`  (
                          `h_helper` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '帮助其他人的人',
                          `h_publishDate` date NULL DEFAULT NULL COMMENT '项目发布日期',
                          `h_helpertel` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '帮助者的电话号码',
-                         `h_helpedtel` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '被帮助者的电话号码',
+                         `h_helpedtel` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '被帮助者的电话号码',
                          `h_helped` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '被帮扶的人，就是发布求助需求的人',
                          `h_type` int(0) NOT NULL COMMENT '0是帮扶关系未形成，1是帮扶关系已形成',
                          `h_intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '帮扶信息',
@@ -134,7 +134,7 @@ CREATE TABLE `voluntary_project`  (
 -- ----------------------------
 -- Records of voluntary_project
 -- ----------------------------
-INSERT INTO `voluntary_project` VALUES (1, '全员核酸', 0, '合肥市巢湖市烔炀镇人民政府', '2022-07-16', '2022-07-16','2022-07-16', '2022-07-17', '2022-07-16', '2022-07-17', '	社会公众', '现场秩序维护及信息录入', '聂汉明', '13586573384', 'image/vonlunteerImage1.png', 340000, 340100, 340181);
+INSERT INTO `voluntary_project` VALUES (100, '全员核酸', 0, '合肥市巢湖市烔炀镇人民政府', '2022-07-16', '2022-07-16','2022-07-16', '2022-07-17', '2022-07-16', '2022-07-17', '	社会公众', '现场秩序维护及信息录入', '聂汉明', '13586573384', 'image/vonlunteerImage1.png', 340000, 340100, 340181);
 INSERT INTO `voluntary_project` VALUES (2, '疫情防控', 1, '遂宁市船山区凯丽滨江-一期', '2022-07-16', '2022-07-16','2022-07-16', '2022-07-24', '2022-07-16', '2022-07-24', '	城镇居民,其他', '在辖区开展疫情防控，排查风险区返遂人员', '章立春', '18114356724', 'image/vonlunteerImage2.png', 510000, 510900, 510903);
 INSERT INTO `voluntary_project` VALUES (3, '健康教育知识讲座', 1, '遂宁市船山区平寨村', '2022-07-16','2022-07-16', '2022-07-16', '2022-07-16', '2022-07-16', '2022-07-16', '社会公众', '2022-7-16上午09:30-10:30开展健康讲座', '利栏', '18932069760', 'image/vonlunteerImage2.png', 510000, 510900, 510903);
 INSERT INTO `voluntary_project` VALUES (4, '城区道路交通劝导员 ', 2, '遂宁市船山区太和大道北段', '2022-07-16','2022-07-16', '2022-07-16', '2022-07-17', '2022-07-16', '2022-07-16', '残障人士,妇女,老年人,儿童', '对射洪市城区部分街道交通不文明行为进行劝阻', '邓韬', '15828935360', 'image/vonlunteerImage3.png', 510000, 510900, 510903);
