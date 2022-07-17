@@ -31,6 +31,8 @@ CREATE TABLE `article`  (
                             `html_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT 'html源码',
                             `state` int(0) NULL DEFAULT NULL COMMENT '0代表草稿箱，1代表已发表，2代表已删除',
                             `type` int(0) NULL DEFAULT NULL COMMENT '0志愿活动1新闻2专题活动之类的',
+                            `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布文件的标题',
+
                             PRIMARY KEY (`id`) USING BTREE,
                             INDEX `u_id`(`u_id`) USING BTREE,
                             CONSTRAINT `article_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `user` (`u_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -43,6 +45,7 @@ DROP TABLE IF EXISTS `help`;
 CREATE TABLE `help`  (
                          `h_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '帮扶表中help的唯一标识',
                          `h_helper` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '帮助其他人的人',
+                         `h_publishDate` date NULL DEFAULT NULL COMMENT '项目发布日期',
                          `h_helpertel` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '帮助者的电话号码',
                          `h_helpedtel` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '被帮助者的电话号码',
                          `h_helped` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '被帮扶的人，就是发布求助需求的人',
@@ -93,7 +96,9 @@ INSERT INTO `user` VALUES (6, 'aaa', '123', 1, 0, '123');
 DROP TABLE IF EXISTS `video`;
 CREATE TABLE `video`  (
                           `v_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
+                          'v_title' varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '视频标题',
                           `v_type` int(0) NOT NULL COMMENT '多媒体类型，类似0视频1图片2文本3网页',
+                          `v_publishDate` date NULL DEFAULT NULL COMMENT '项目发布日期',
                           `v_location` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文件路径',
                           `v_intro` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '多媒体的介绍',
                           `v_image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '可以代表多媒体的图片',
