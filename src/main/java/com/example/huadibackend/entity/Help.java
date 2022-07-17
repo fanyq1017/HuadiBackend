@@ -4,10 +4,12 @@ import lombok.Data;
 
 @Data
 public class Help {
-    private int helpId;
-    private String helper;
-    private String helped;
-    private int type;
-    private String intro;
+    private int hId;
+    private String hHelper;
+    private String hHelpertel;
+    private String hHelpedtel;
+    private String hHelped;
+    private int hType;
+    private String hIntro;
 
 }
