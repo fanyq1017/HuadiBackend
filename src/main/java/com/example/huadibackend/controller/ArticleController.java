@@ -84,8 +84,9 @@ public class ArticleController extends BaseConfig {
         return new JsonResult<Article>(200,article) ;
     }
 
-    @RequestMapping(value = "/dustbin", method = RequestMethod.PUT)
+    @RequestMapping(value = "/dustbin", method = RequestMethod.POST)
     public JsonResult<String> updateArticleState(Integer[] aids, Integer state) {
+        state =2 ;
         for (Integer aid:aids) {
             if (articleService.updateArticleState(aid, state) == aids.length) {
                 return new JsonResult<String>(200, "删除成功!");

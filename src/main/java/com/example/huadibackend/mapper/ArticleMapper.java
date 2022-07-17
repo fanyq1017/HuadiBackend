@@ -17,8 +17,8 @@ import java.util.List;
 public interface ArticleMapper extends BaseMapper<Article> {
     @Options(useGeneratedKeys = true)
     @Insert("insert into article(title,u_id,publish_date,md_content," +
-            "state,edit_time,type,html_content) values(#{title}," +
-            " #{uId},#{publishDate},#{mdContent},#{state},#{editTime},#{type},#{htmlContent})")
+            "state,edit_time,type,html_content,nickname) values(#{title}," +
+            " #{uId},#{publishDate},#{mdContent},#{state},#{editTime},#{type},#{htmlContent},#{nickname})")
     int addNewArticle(Article article);
 
     @Update("update article set title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},editTime=#{editTime} where id =#{id}")

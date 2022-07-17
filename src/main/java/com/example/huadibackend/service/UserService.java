@@ -15,7 +15,7 @@ public interface UserService {
 
     int insertUser(User user);  //通常用于注册使用，表单返回
 
-    void updateUserInformation(User user);
+    int updateUserInformation(User user);
 
     List<User> ShowUserInformation(); //返回所有信息用于管理员进行管理
 

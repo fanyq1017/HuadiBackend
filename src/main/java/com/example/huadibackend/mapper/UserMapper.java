@@ -21,7 +21,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Update("update user set username=#{username},password=#{password},type =#{type}," +
             "valid=#{valid},telephone = #{telephone} where u_Id = #{uId}")
-    void updateUserInformation(User user);
+    int updateUserInformation(User user);
 
     @Select("select * from user")
     List<User> ShowUserInformation(); //返回所有信息用于管理员进行管理

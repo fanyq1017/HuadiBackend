@@ -17,9 +17,9 @@ public class Article {
     private Timestamp editTime;
     private String mdContent;
     private String htmlContent;
-    private Integer state;
+    private Integer state;//0未发表1已发表2删除
     private Integer type;
-
+    private String nickname;
 
 
 

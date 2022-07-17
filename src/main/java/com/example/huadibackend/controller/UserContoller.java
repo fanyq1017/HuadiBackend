@@ -77,6 +77,14 @@ public class UserContoller {
          return new JsonResult<User>(200,user);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/amendProfile" , method = RequestMethod.POST)
+    public JsonResult<String> amendProfile(User user){
+        int res = userService.updateUserInformation(user);
+          if (res ==1 ) { return new JsonResult<>(200,"修改成功");}
+          else {return new JsonResult<>(400,"修改失败");}
+    }
+
 
 
 
