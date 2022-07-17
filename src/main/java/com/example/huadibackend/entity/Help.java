@@ -23,7 +23,8 @@ public class Help {
     private String hHelpedtel;
     private Timestamp hPublishdate;
     private String hHelped;
-    private Integer hType;//0未完成1已完成
+    private Integer hType;//0经济援助1法律援助
+    private Integer hState;
     private String hIntro;
 
 }

@@ -7,7 +7,7 @@ import com.example.huadibackend.entity.Help;
 import com.example.huadibackend.mapper.HelpMapper;
 
 public interface HelpService {
-    IPage<Help> viewHelpByType(Page<Help> page,Integer type);//分页查询帮扶页面
+    IPage<Help> viewHelpByType(Page<Help> page,Integer state);//分页查询帮扶页面
 
     int insert(Help help);
 

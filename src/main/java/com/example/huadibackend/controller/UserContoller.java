@@ -18,13 +18,13 @@ public class UserContoller {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public JsonResult<Object> login(String username, String password, HttpSession session) {
         User userRes = userService.userLogin(username, password);
+        if (userRes== null) {
+            return new JsonResult<Object>(400, "登陆失败");        }
         session.setAttribute("uid",userRes.getUId());
         session.setAttribute("username",userRes.getUsername());
         System.out.println(username);
-        if (userRes!= null) {
-            return new JsonResult<Object>(200, userRes);
-        }
-        return new JsonResult<Object>(400, "登陆失败");
+
+        return new JsonResult<Object>(200, userRes);
     }
 
     @ResponseBody

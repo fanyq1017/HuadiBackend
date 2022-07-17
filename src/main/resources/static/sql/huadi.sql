@@ -49,7 +49,8 @@ CREATE TABLE `help`  (
                          `h_helpertel` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '帮助者的电话号码',
                          `h_helpedtel` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '被帮助者的电话号码',
                          `h_helped` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '被帮扶的人，就是发布求助需求的人',
-                         `h_type` int(0) NOT NULL COMMENT '0是帮扶关系未形成，1是帮扶关系已形成',
+                         `h_type` int(0) NOT NULL COMMENT '0是经济援助，1是法律援助',
+                         `h_state` int(0) NOT NULL COMMENT '0是未完成，1是已完成',
                          `h_intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '帮扶信息',
                          PRIMARY KEY (`h_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '雷锋热线中的帮扶表，只需打开列表查询帮扶相关信息即可' ROW_FORMAT = Dynamic;
@@ -98,6 +99,7 @@ CREATE TABLE `video`  (
                           `v_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
                           'v_title' varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '视频标题',
                           `v_type` int(0) NOT NULL COMMENT '多媒体类型，类似0视频1图片2文本3网页',
+                          `v_state` int(0) NOT NULL COMMENT '多媒体状态0已删除1可用',
                           `v_publishDate` date NULL DEFAULT NULL COMMENT '项目发布日期',
                           `v_location` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文件路径',
                           `v_intro` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '多媒体的介绍',

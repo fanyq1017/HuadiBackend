@@ -15,10 +15,10 @@ public class HelpServiceImpl implements HelpService {
     @Autowired
     HelpMapper helpMapper;
     @Override
-    public IPage<Help> viewHelpByType(Page<Help> page, Integer hType) {
+    public IPage<Help> viewHelpByType(Page<Help> page, Integer hState) {
 
             QueryWrapper<Help> qw=new QueryWrapper<>();
-            qw.eq("h_type",hType);
+            qw.eq("h_state",hState);
             return helpMapper.selectPage(page,qw);
 
         }
