@@ -1,6 +1,7 @@
 package com.example.huadibackend.service.serviceimpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.User;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
        return userMapper.insertUser(user);
     }
 
+
     @Override
     public int updateUserInformation(User user) {
         return userMapper.updateUserInformation(user);
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public IPage<User> ShowUserInformation(Page<User> page) {
         QueryWrapper<User> queryWrapper= new QueryWrapper<>();
+        queryWrapper.eq("valid",1);
         return userMapper.selectPage(page,queryWrapper);
     }
 
@@ -62,6 +65,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateTypeById(Integer type, Integer uid) {
         return userMapper.updateStateById(type,uid);
+    }
+
+    @Override
+    public int updateValidByID(Integer uId) {
+        UpdateWrapper<User> uw = new UpdateWrapper<>();
+        uw.eq("u_id",uId);
+        uw.set("valid",0);
+        return userMapper.update(null,uw);
+    }
+
+    @Override
+    public IPage<User> searchByUsername(Page<User> page, String username) {
+        QueryWrapper<User> qw= new QueryWrapper<>();
+        qw.like("username",username);
+        return userMapper.selectPage(page,qw);
     }
 
 }

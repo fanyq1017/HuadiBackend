@@ -17,4 +17,6 @@ public interface HelpService {
 
     Help viewById(Integer hId);
 
+    IPage<Help> searchNeed(Page<Help> page, String hName);
+
 }

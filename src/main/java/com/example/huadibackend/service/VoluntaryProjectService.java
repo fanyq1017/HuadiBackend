@@ -23,4 +23,7 @@ public interface VoluntaryProjectService {
     IPage<VoluntaryProject> selectPageByRegioncode(Page<VoluntaryProject> page, Integer provinceRegionCode,Integer cityRegionCode,Integer districtRegionCode);
 
     IPage<VoluntaryProject> selectPage(Page<VoluntaryProject> page);
+
+    IPage<VoluntaryProject> searchByName(Page<VoluntaryProject> page,String pName);
+
 }

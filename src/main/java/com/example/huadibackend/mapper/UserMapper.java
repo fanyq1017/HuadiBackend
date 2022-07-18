@@ -19,7 +19,7 @@ public interface UserMapper extends BaseMapper<User> {
             "values(#{username},#{password},#{type},#{valid},#{telephone})")
     int insertUser(User user);  //通常用于注册使用，表单返回
 
-    @Update("update user set username=#{username},password=#{password},type =#{type}," +
+    @Update("update user set username=#{username},password=#{password},type=#{type}," +
             "valid=#{valid},telephone = #{telephone} where u_Id = #{uId}")
     int updateUserInformation(User user);
 

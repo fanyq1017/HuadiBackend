@@ -48,7 +48,12 @@ public class HelpServiceImpl implements HelpService {
         return helpMapper.selectById(hId);
     }
 
-
+    @Override
+    public IPage<Help> searchNeed(Page<Help> page, String hName) {
+        QueryWrapper<Help> queryWrapper =new QueryWrapper();
+        queryWrapper.like("h_name",hName);
+        return helpMapper.selectPage(page,queryWrapper);
+    }
 
 
 }

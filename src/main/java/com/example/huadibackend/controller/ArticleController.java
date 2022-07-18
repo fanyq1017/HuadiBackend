@@ -85,14 +85,21 @@ public class ArticleController extends BaseConfig {
     }
 
     @RequestMapping(value = "/dustbin", method = RequestMethod.POST)
-    public JsonResult<String> updateArticleState(Integer[] aids, Integer state) {
+    public JsonResult<String> updateArticleState(Integer[] aIds, Integer state) {
         state =2 ;
-        for (Integer aid:aids) {
-            if (articleService.updateArticleState(aid, state) == aids.length) {
-                return new JsonResult<String>(200, "删除成功!");
+        int cnt =0;
+        try {
+        for (Integer aId:aIds) {
+            if (articleService.updateArticleState(aId, state) == 1 )
+                cnt ++ ;
+             }
+        if (cnt == aIds.length){
+                return new JsonResult<String>(200, "修改成功!");
             }
+        return new JsonResult<String>(400, "存在无效ID");
+         }catch(Exception e) {
+            return new JsonResult<String>(400, "修改异常!");
         }
-        return new JsonResult<String>(400, "删除失败!");
     }
 
     @RequestMapping("/dataStatistics")

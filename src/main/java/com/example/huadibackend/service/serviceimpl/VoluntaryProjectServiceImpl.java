@@ -48,9 +48,9 @@ public class VoluntaryProjectServiceImpl implements VoluntaryProjectService {
     @Override
     public IPage<VoluntaryProject> selectPageByRegioncode(Page<VoluntaryProject> page, Integer provinceRegionCode, Integer cityRegionCode, Integer districtRegionCode) {
             QueryWrapper<VoluntaryProject> qw = new QueryWrapper<>();
-            qw.eq("p_provinceregioncode",provinceRegionCode);
-            qw.eq("p_cityregioncode",cityRegionCode);
-            qw.eq("p_districtregioncode",districtRegionCode);
+            qw.eq(provinceRegionCode!=0,"p_provinceregioncode",provinceRegionCode);
+            qw.eq(cityRegionCode!=0,"p_cityregioncode",cityRegionCode);
+            qw.eq(districtRegionCode!=0,"p_districtregioncode",districtRegionCode);
             return voluntaryProjectMapper.selectPage(page,qw);
 
 
@@ -59,6 +59,13 @@ public class VoluntaryProjectServiceImpl implements VoluntaryProjectService {
     @Override
     public IPage<VoluntaryProject> selectPage(Page<VoluntaryProject> page) {
         QueryWrapper<VoluntaryProject> qw =new QueryWrapper<>();
+        return voluntaryProjectMapper.selectPage(page,qw);
+    }
+
+    @Override
+    public IPage<VoluntaryProject> searchByName(Page<VoluntaryProject> page, String pName) {
+        QueryWrapper<VoluntaryProject> qw =new QueryWrapper<>();
+        qw.like("p_name",pName);
         return voluntaryProjectMapper.selectPage(page,qw);
     }
 

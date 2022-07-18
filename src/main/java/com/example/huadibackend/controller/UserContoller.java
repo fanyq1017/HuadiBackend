@@ -36,7 +36,7 @@ public class UserContoller {
         user.setType(0);
         user.setValid(1);
         int isRepeat = userService.checkUsername(user.getUsername());
-        if (isRepeat !=0) { return new JsonResult<String>(200,"账号已存在");}
+        if (isRepeat !=0) { return new JsonResult<String>(400,"账号已存在");}
         int res = userService.insertUser(user);
         System.out.println(res);
         if (res == 1) {
@@ -83,7 +83,12 @@ public class UserContoller {
     @ResponseBody
     @RequestMapping(value = "/amendProfile" , method = RequestMethod.POST)
     public JsonResult<String> amendProfile(User user){
+        int isRepeat = userService.checkUsername(user.getUsername());
+        if (isRepeat !=0) { return new JsonResult<String>(400,"账号已存在");}
+        System.out.println(user);
+        user.setValid(1);
         int res = userService.updateUserInformation(user);
+        System.out.println(user);
           if (res ==1 ) { return new JsonResult<>(200,"修改成功");}
           else {return new JsonResult<>(400,"修改失败");}
     }
@@ -91,10 +96,44 @@ public class UserContoller {
     @ResponseBody
     @RequestMapping(value = "/listUser",method = RequestMethod.GET)
     public JsonResult<Object> getUserList(@RequestParam(value = "page")Integer current,@RequestParam(value = "count")Integer size){
+
         Page<User> page = new Page<>(current,size);
         IPage<User> iPage= userService.ShowUserInformation(page);
         return new JsonResult<>(200,iPage);
     }
+
+    @ResponseBody
+    @RequestMapping(value ="/deleteUser",method = RequestMethod.POST)
+    public JsonResult<String> deleteUser(Integer[] uIds){
+        Integer valid =0 ;//0表示正常1表示异常
+        int cnt =0;
+        try {
+            for (Integer uId:uIds) {
+                if (userService.updateValidByID(uId) == 1 )
+                    cnt ++ ;
+            }
+            if (cnt == uIds.length){
+                return new JsonResult<String>(200, "删除成功!");
+            }
+            return new JsonResult<String>(400, "存在无效ID");
+        }catch(Exception e) {
+            e.printStackTrace();
+            return new JsonResult<String>(400, "删除异常!");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/searchUsername",method = RequestMethod.POST)
+    public JsonResult<Object> searchUsername (@RequestParam(value = "page")Integer current,
+                                              @RequestParam(value = "count")Integer size,
+                                              @RequestParam(value = "username") String username){
+            Page<User> page =new Page<>(current,size);
+            IPage<User> iPage = userService.searchByUsername(page,username);
+            return new JsonResult<>(200,iPage);
+    }
+
+
+
 
 
 

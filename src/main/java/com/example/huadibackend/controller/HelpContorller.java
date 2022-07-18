@@ -60,4 +60,13 @@ public class HelpContorller {
          }else return new JsonResult<>(400,"信息更新失败");
     }
 
+    @RequestMapping(value = "/searchNeed",method = RequestMethod.POST)
+    public JsonResult<Object> searchNeed(@RequestParam(value = "page")Integer current,
+                                         @RequestParam(value = "count")Integer size,
+                                         @RequestParam(value = "hName") String hName){
+        Page<Help> page =new Page<>(current,size);
+        IPage<Help> iPage = helpService.searchNeed(page,hName);
+        return new JsonResult<>(200,iPage);
+    }
+
 }

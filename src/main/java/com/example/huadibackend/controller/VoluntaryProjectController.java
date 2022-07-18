@@ -3,6 +3,7 @@ package com.example.huadibackend.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.huadibackend.entity.User;
 import com.example.huadibackend.entity.VoluntaryProject;
 import com.example.huadibackend.service.VoluntaryProjectService;
 import com.example.huadibackend.util.JsonResult;
@@ -56,7 +57,7 @@ public class VoluntaryProjectController {
         @ResponseBody
         @RequestMapping(value= "/query" ,method = RequestMethod.GET) //通过省市区找项目
         public JsonResult<IPage<VoluntaryProject>> query(@RequestParam(value = "page")Integer current,
-                                        @RequestParam(value = "size")Integer size,
+                                        @RequestParam(value = "count")Integer size,
                                         @RequestParam(value ="provinceRegionCode")Integer procinceRegioncode,
                                         @RequestParam(value ="cityRegionCode")Integer cityRegioncode,
                                         @RequestParam(value ="districtRegionCode")Integer districtRegioncode){
@@ -117,5 +118,15 @@ public class VoluntaryProjectController {
             Page<VoluntaryProject> page = new Page<>(current, size);
             IPage ipage = voluntaryProjectService.selectPage(page);
             return new JsonResult<IPage<VoluntaryProject>>(200,ipage);
+        }
+
+        @ResponseBody
+        @RequestMapping(value = "/searchProject",method = RequestMethod.POST)//通过名字进行查询
+        public JsonResult<Object> searchProject(@RequestParam(value = "page")Integer current,
+                                                @RequestParam(value = "count")Integer size,
+                                                @RequestParam(value = "pName") String pName){
+            Page<VoluntaryProject> page =new Page<>(current,size);
+            IPage<VoluntaryProject> iPage =voluntaryProjectService.searchByName(page,pName);
+            return new JsonResult<>(200,iPage);
         }
 }
