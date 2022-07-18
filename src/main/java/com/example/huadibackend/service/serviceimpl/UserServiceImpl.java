@@ -1,5 +1,8 @@
 package com.example.huadibackend.service.serviceimpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.User;
 import com.example.huadibackend.mapper.UserMapper;
 import com.example.huadibackend.service.UserService;
@@ -37,8 +40,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> ShowUserInformation() {
-        return userMapper.ShowUserInformation();
+    public IPage<User> ShowUserInformation(Page<User> page) {
+        QueryWrapper<User> queryWrapper= new QueryWrapper<>();
+        return userMapper.selectPage(page,queryWrapper);
     }
 
     @Override

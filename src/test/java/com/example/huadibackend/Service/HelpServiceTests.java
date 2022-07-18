@@ -19,7 +19,7 @@ public class HelpServiceTests {
     @Test
     public void add() {
         Timestamp ts =new Timestamp(System.currentTimeMillis());
-        Help help =new Help(null,"c","17720783866","15516133441",ts,"李四",1,"11111");
+        Help help =new Help(null,"c","17720783866","15516133441",ts,"李四",1,0,"11111");
         helpService.insert(help);
         System.out.println(help);
     }

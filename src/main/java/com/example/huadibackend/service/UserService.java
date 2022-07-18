@@ -1,5 +1,7 @@
 package com.example.huadibackend.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,14 @@ public interface UserService {
 
     int updateUserInformation(User user);
 
-    List<User> ShowUserInformation(); //返回所有信息用于管理员进行管理
+    IPage<User> ShowUserInformation(Page<User>  page); //返回所有信息用于管理员进行管理
 
     public User userLogin(String username, String password);
 
     int checkUsername(String username);
 
     int updateTypeById(Integer type, Integer uid);
+
+
 
 }

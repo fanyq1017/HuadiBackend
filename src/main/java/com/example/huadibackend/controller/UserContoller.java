@@ -1,5 +1,7 @@
 package com.example.huadibackend.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.User;
 import com.example.huadibackend.service.UserService;
 import com.example.huadibackend.util.JsonResult;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.sql.PreparedStatement;
 
 @RestController
 public class UserContoller {
@@ -83,6 +86,14 @@ public class UserContoller {
         int res = userService.updateUserInformation(user);
           if (res ==1 ) { return new JsonResult<>(200,"修改成功");}
           else {return new JsonResult<>(400,"修改失败");}
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/listUser",method = RequestMethod.GET)
+    public JsonResult<Object> getUserList(@RequestParam(value = "page")Integer current,@RequestParam(value = "count")Integer size){
+        Page<User> page = new Page<>(current,size);
+        IPage<User> iPage= userService.ShowUserInformation(page);
+        return new JsonResult<>(200,iPage);
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.huadibackend.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.VoluntaryProject;
 import com.example.huadibackend.service.VoluntaryProjectService;
@@ -100,4 +101,21 @@ public class VoluntaryProjectController {
             else {return new JsonResult<>(400,"修改失败");
         }
 }
+        @ResponseBody
+        @RequestMapping(value = "/queryProject",method = RequestMethod.GET)
+        public JsonResult<Object> queryProject(Integer pId){
+                VoluntaryProject voluntaryProject =voluntaryProjectService.selectById(pId);
+                if(voluntaryProject == null ) {return new JsonResult<>(400,"该账号不存在");}
+                return new JsonResult<>(200,voluntaryProject);
+        }
+
+        @ResponseBody
+        @RequestMapping(value= "/queryAll" ,method = RequestMethod.GET) //通过省市区找项目
+        public JsonResult<IPage<VoluntaryProject>> query(@RequestParam(value = "page")Integer current,
+                                                         @RequestParam(value = "count")Integer size
+                                                         ){
+            Page<VoluntaryProject> page = new Page<>(current, size);
+            IPage ipage = voluntaryProjectService.selectPage(page);
+            return new JsonResult<IPage<VoluntaryProject>>(200,ipage);
+        }
 }

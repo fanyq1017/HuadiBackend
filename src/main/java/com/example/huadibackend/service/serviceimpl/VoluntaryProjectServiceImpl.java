@@ -56,5 +56,11 @@ public class VoluntaryProjectServiceImpl implements VoluntaryProjectService {
 
     }
 
+    @Override
+    public IPage<VoluntaryProject> selectPage(Page<VoluntaryProject> page) {
+        QueryWrapper<VoluntaryProject> qw =new QueryWrapper<>();
+        return voluntaryProjectMapper.selectPage(page,qw);
+    }
+
 
 }

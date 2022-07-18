@@ -22,4 +22,5 @@ public interface VoluntaryProjectService {
 
     IPage<VoluntaryProject> selectPageByRegioncode(Page<VoluntaryProject> page, Integer provinceRegionCode,Integer cityRegionCode,Integer districtRegionCode);
 
+    IPage<VoluntaryProject> selectPage(Page<VoluntaryProject> page);
 }
