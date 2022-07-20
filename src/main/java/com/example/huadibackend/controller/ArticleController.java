@@ -7,12 +7,14 @@ import com.example.huadibackend.config.BaseConfig;
 import com.example.huadibackend.entity.Article;
 import com.example.huadibackend.service.ArticleService;
 import com.example.huadibackend.util.JsonResult;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -94,11 +96,12 @@ public class ArticleController extends BaseConfig {
                 cnt ++ ;
              }
         if (cnt == aIds.length){
-                return new JsonResult<String>(200, "修改成功!");
+                return new JsonResult<String>(200, "删除成功!");
             }
         return new JsonResult<String>(400, "存在无效ID");
          }catch(Exception e) {
-            return new JsonResult<String>(400, "修改异常!");
+            e.printStackTrace();
+            return new JsonResult<String>(400, "删除失败!");
         }
     }
 
@@ -111,4 +114,27 @@ public class ArticleController extends BaseConfig {
         map.put("ds", dataStatistics);
         return map;
     }
+
+    @RequestMapping(value = "/queryTitle",method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult<Object> queryTitle(@RequestParam(value = "title")String title,
+                                         @RequestParam(value = "page")Integer current,
+                                         @RequestParam(value = "count")Integer size) {
+        Page<Article> page = new Page<>(current, size);
+        try {
+        IPage<Article> iPage = articleService.queryByTitle(page,title);
+        return new JsonResult<>(200,iPage);
+        }catch (Exception e) {return new JsonResult<>(400,"请求失败") ;}
+    }
+
+    @RequestMapping(value= "/amendArticle",method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult<String> amendArticle(Article article){
+         article.setEditTime(new Timestamp(System.currentTimeMillis()));
+         int res = articleService.amendArticle(article);
+         if (res == 1) return new JsonResult<>(200,"修改成功");
+         else return new JsonResult<>(400,"修改失败");
+    }
+
+
 }

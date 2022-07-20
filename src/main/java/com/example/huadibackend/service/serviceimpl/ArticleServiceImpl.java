@@ -1,6 +1,7 @@
 package com.example.huadibackend.service.serviceimpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.Article;
@@ -52,7 +53,7 @@ public class ArticleServiceImpl implements ArticleService {
     public IPage<Article> selectByStateType(Integer state,Page<Article> page,Integer type){
         QueryWrapper<Article> qw = new QueryWrapper<>();
         qw.eq("state",state);
-        qw.eq(type ==0,"type",type);
+        qw.eq(type !=-1,"type",type);
         return articleMapper.selectPage(page,qw);
     }
 
@@ -111,12 +112,31 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public IPage<Article> queryByTitle(Page<Article> page, String title) {
+        QueryWrapper<Article> qw = new QueryWrapper<>();
+        qw.like("title",title);
+        return articleMapper.selectPage(page,qw);
+    }
+
+    @Override
     public int deleteArticleById(Integer[] aids) {
         QueryWrapper<Article> qw = new QueryWrapper<>();
         List<Integer> resultList= new ArrayList<>(Arrays.asList(aids));
         qw.in("id",resultList);
         return articleMapper.deleteArticleById(qw);
 
+    }
+
+    @Override
+    public int amendArticle(Article article){
+        UpdateWrapper<Article> uw =new UpdateWrapper<>();
+        uw.set("title",article.getTitle());
+        uw.set("type",article.getType());
+        uw.set("md_content",article.getMdContent());
+        uw.set("html_content",article.getHtmlContent());
+        uw.set("edit_time",new Timestamp(System.currentTimeMillis()));
+        uw.eq("id",article.getId());
+        return articleMapper.update(null,uw);
     }
 
 

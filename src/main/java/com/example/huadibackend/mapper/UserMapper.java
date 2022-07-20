@@ -26,7 +26,7 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select * from user")
     List<User> ShowUserInformation(); //返回所有信息用于管理员进行管理
 
-    @Select("select u_Id,username,telephone,type from user where username = #{username} and password = #{password}")
+    @Select("select u_Id,username,telephone,type,valid from user where username = #{username} and password = #{password}")
     User Login(String username, String password);
 
     @Update("update user set type =#{type} where u_id =#{uid}")

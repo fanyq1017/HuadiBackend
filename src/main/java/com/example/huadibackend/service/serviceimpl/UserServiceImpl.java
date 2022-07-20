@@ -57,9 +57,10 @@ public class UserServiceImpl implements UserService {
     public int checkUsername(String username) {
         Map<String, Object> map =new HashMap<String, Object>();
         map.put("username",username);
+        map.put("valid",1);
         List<User> useres = userMapper.selectByMap(map);
         int size = useres.size();
-        return (size);
+        return size;
     }
 
     @Override
@@ -79,6 +80,7 @@ public class UserServiceImpl implements UserService {
     public IPage<User> searchByUsername(Page<User> page, String username) {
         QueryWrapper<User> qw= new QueryWrapper<>();
         qw.like("username",username);
+        qw.eq("valid",1);
         return userMapper.selectPage(page,qw);
     }
 

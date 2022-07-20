@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.huadibackend.entity.Help;
 import com.example.huadibackend.service.HelpService;
 import com.example.huadibackend.util.JsonResult;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +34,7 @@ public class HelpContorller {
                 return new JsonResult<>(200, "添加失败");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return new JsonResult<>(400, "请填写完善信息");
         }
     }
@@ -69,4 +71,16 @@ public class HelpContorller {
         return new JsonResult<>(200,iPage);
     }
 
+
+    @RequestMapping(value = "/addAid",method = RequestMethod.POST)
+    public JsonResult<String> addAid(@RequestParam(value = "hHelper")String hHelper,
+                                     @RequestParam(value = "type")Integer hType,
+                                     @RequestParam(value = "hHelpertel")String hHelpertel,
+                                     @RequestParam(value = "hIntro")String hIntro)
+    {
+         Help help = new Help(null,hHelper,hHelpertel,"17720783866",new Timestamp(System.currentTimeMillis()),"lkc",hType,1,hIntro);
+         int res = helpService.insert(help);
+         if (res ==1 ) return new JsonResult<>(200,"帮扶成功");
+         else return new JsonResult<>(400,"帮扶失败");
+    }
 }

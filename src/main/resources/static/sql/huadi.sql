@@ -30,7 +30,7 @@ CREATE TABLE `article`  (
                             `md_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '管理员发布的markdown文件的源码',
                             `html_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT 'html源码',
                             `state` int(0) NULL DEFAULT NULL COMMENT '0代表草稿箱，1代表已发表，2代表已删除',
-                            `type` int(0) NULL DEFAULT NULL COMMENT '0志愿活动1新闻2专题活动之类的',
+                            `type` int(0) NULL DEFAULT NULL COMMENT '-1全部0志愿活动1新闻2专题活动之类的',
                             `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布文件的标题',
 
                             PRIMARY KEY (`id`) USING BTREE,
@@ -50,7 +50,7 @@ CREATE TABLE `help`  (
                          `h_helpedtel` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '被帮助者的电话号码',
                          `h_helped` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '被帮扶的人，就是发布求助需求的人',
                          `h_type` int(0) NOT NULL COMMENT '0是经济援助，1是法律援助',
-                         `h_state` int(0) NOT NULL COMMENT '0是未完成，1是已完成',
+                         `h_state` int(0) NOT NULL DEFAULT 0 COMMENT '0是未完成，1是已完成',
                          `h_intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '帮扶信息',
                          PRIMARY KEY (`h_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '雷锋热线中的帮扶表，只需打开列表查询帮扶相关信息即可' ROW_FORMAT = Dynamic;

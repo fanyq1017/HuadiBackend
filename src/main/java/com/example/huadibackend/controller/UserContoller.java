@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.sql.PreparedStatement;
+import java.util.Objects;
 
 @RestController
 public class UserContoller {
@@ -21,7 +22,8 @@ public class UserContoller {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public JsonResult<Object> login(String username, String password, HttpSession session) {
         User userRes = userService.userLogin(username, password);
-        if (userRes== null) {
+
+        if (userRes== null || userRes.getValid() == 0) {
             return new JsonResult<Object>(400, "登陆失败");        }
         session.setAttribute("uid",userRes.getUId());
         session.setAttribute("username",userRes.getUsername());
@@ -83,7 +85,9 @@ public class UserContoller {
     @ResponseBody
     @RequestMapping(value = "/amendProfile" , method = RequestMethod.POST)
     public JsonResult<String> amendProfile(User user){
+        System.out.println(user);
         int isRepeat = userService.checkUsername(user.getUsername());
+        if (Objects.equals(user.getUsername(), userService.selectById(user.getUId()).getUsername())) isRepeat--;
         if (isRepeat !=0) { return new JsonResult<String>(400,"账号已存在");}
         System.out.println(user);
         user.setValid(1);

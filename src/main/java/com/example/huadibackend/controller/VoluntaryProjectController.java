@@ -26,16 +26,16 @@ public class VoluntaryProjectController {
                                   String pServeclient,String pInfo,String pPeople,String pTelephone,Integer pProvinceregioncode,Integer pCityregioncode,
                                   Integer pDistrictregioncode) {
             System.out.println(pProjectstart);
-            pProjectstart += " 00:00:00";
-            pProjectend += " 00:00:00";
-            pRecruitend += " 00:00:00";
-            pRecruitstart += " 00:00:00";
+            pProjectstart += " 08:00:00";
+            pProjectend += " 08:00:00";
+            pRecruitend += " 08:00:00";
+            pRecruitstart += " 08:00:00";
 
         System.out.println(pProjectstart+" \n"+pProjectend+" \n"+pRecruitstart+" \n"+pRecruitend);
         Timestamp tspstart = Timestamp.valueOf(pProjectstart);
         Timestamp tspend = Timestamp.valueOf(pProjectend);
-        Timestamp tsrstart = Timestamp.valueOf(pRecruitend);
-        Timestamp tsrend = Timestamp.valueOf(pRecruitstart);
+        Timestamp tsrstart = Timestamp.valueOf(pRecruitstart);
+        Timestamp tsrend = Timestamp.valueOf(pRecruitend);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
             VoluntaryProject voluntaryProject =new VoluntaryProject(pId,pImage,pName,pType,pLocation,tspstart,tspend,null,null,tsrstart,tsrend,
@@ -67,10 +67,17 @@ public class VoluntaryProjectController {
         }
 
         @ResponseBody
-        @RequestMapping(value = "/delete",method = RequestMethod.GET)
-        public JsonResult<String> delete(@RequestParam(value = "pId")Integer pId){
-            int res =voluntaryProjectService.deleteById(pId);
-            if (res == 1) return new JsonResult<>(200,"删除成功");
+        @RequestMapping(value = "/delete",method = RequestMethod.POST)
+        public JsonResult<String> delete(@RequestParam(value = "pIds")Integer[] pIds){
+            System.out.println(pIds);
+            System.out.println(pIds.length);
+        int cnt =0 ;
+            for (Integer pId:pIds) {
+                int res = voluntaryProjectService.deleteById(pId);
+                if (res == 1) cnt++;
+            } if (cnt == pIds.length) {
+                return new JsonResult<>(200, "删除成功");
+            }
             else { return new JsonResult<>(400,"删除失败");}
         }
 
@@ -80,22 +87,24 @@ public class VoluntaryProjectController {
                                          String pProjectend,String pRecruitstart,String pRecruitend,
                                          String pServeclient,String pInfo,String pPeople,String pTelephone,Integer pProvinceregioncode,Integer pCityregioncode,
                                          Integer pDistrictregioncode) {
-            pProjectstart += " 00:00:00";
-            pProjectend += " 00:00:00";
-            pRecruitend += " 00:00:00";
-            pRecruitstart += " 00:00:00";
+            pProjectstart += " 08:00:00";
+            pProjectend += " 08:00:00";
+            pRecruitend += " 08:00:00";
+            pRecruitstart += " 08:00:00";
             //更新过程
             System.out.println(pProjectstart+" \n"+pProjectend+" \n"+pRecruitstart+" \n"+pRecruitend);
             Timestamp tspstart = Timestamp.valueOf(pProjectstart);
             Timestamp tspend = Timestamp.valueOf(pProjectend);
-            Timestamp tsrstart = Timestamp.valueOf(pRecruitend);
-            Timestamp tsrend = Timestamp.valueOf(pRecruitstart);
+            Timestamp tsrstart = Timestamp.valueOf(pRecruitstart);
+            Timestamp tsrend = Timestamp.valueOf(pRecruitend);
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             VoluntaryProject voluntaryProject =voluntaryProjectService.selectById(pId);
+            System.out.println(voluntaryProject);
             Timestamp publishdate = voluntaryProject.getPPublishdate();
 
             VoluntaryProject newvoluntaryProject =new VoluntaryProject(pId,pImage,pName,pType,pLocation,tspstart,tspend,publishdate,timestamp,tsrstart,tsrend,
                     pServeclient,pInfo,pPeople,pTelephone,pProvinceregioncode,pCityregioncode,pDistrictregioncode);
+            System.out.println(newvoluntaryProject);
 
             int res = voluntaryProjectService.updateById(newvoluntaryProject);
             if (res ==1 ) {return new JsonResult<>(200,"修改成功");}
