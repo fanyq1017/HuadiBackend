@@ -1,9 +1,7 @@
 package com.example.huadibackend.Service;
 
-import com.example.huadibackend.entity.Activity;
 import com.example.huadibackend.entity.Article;
 import com.example.huadibackend.service.ArticleService;
-import org.apache.ibatis.annotations.Update;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

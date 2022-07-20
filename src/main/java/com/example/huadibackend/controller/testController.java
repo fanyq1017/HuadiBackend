@@ -14,7 +14,7 @@ import java.util.UUID;
 
 
 @Controller
-public class formController extends BaseConfig {
+public class testController extends BaseConfig {
     @GetMapping("/form_layouts")//上传文件的初步模型
     public String formLayouts(){
         return "form/form_layouts";
